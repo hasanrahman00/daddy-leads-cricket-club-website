@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="680" height="540" viewBox="0 0 680 540" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Daddy Leads cricket t-shirt — front view with diagonal gold and black split</title>
+<desc>Front design with a diagonal split running from the top-right shoulder down to the bottom-left hem. Upper-left region gold D4A23F, lower-right black 1A1A1A. The DL emblem with crossed cricket bats, Daddy Leads arched text, EST. 2022 banner, and Cricket Club wordmark sit at chest center, with colors inverting across the diagonal.</desc>
+
+<defs>
+  <clipPath id="sc-f"><path d="M 300 45 C 312 35, 368 35, 380 45 L 410 70 L 510 100 L 530 180 L 475 205 L 455 165 L 455 480 L 225 480 L 225 165 L 205 205 L 150 180 L 170 100 L 270 70 Z"/></clipPath>
+  <clipPath id="ul-f"><polygon points="-100,-100 380,45 225,480 -100,540"/></clipPath>
+  <clipPath id="lr-f"><polygon points="380,45 780,-100 780,540 225,480"/></clipPath>
+  <path id="arc-f" d="M 270 280 A 70 70 0 0 1 410 280" fill="none"/>
+</defs>
+
+<g clip-path="url(#sc-f)">
+  <polygon points="-100,-100 380,45 225,480 -100,540" fill="#D4A23F"/>
+  <polygon points="380,45 780,-100 780,540 225,480" fill="#1A1A1A"/>
+</g>
+
+<path d="M 300 45 C 312 35, 368 35, 380 45 L 410 70 L 510 100 L 530 180 L 475 205 L 455 165 L 455 480 L 225 480 L 225 165 L 205 205 L 150 180 L 170 100 L 270 70 Z" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+
+<g clip-path="url(#ul-f)">
+  <path d="M 300 45 Q 340 75 380 45" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+  <line x1="232" y1="470" x2="448" y2="470" stroke="#1A1A1A" stroke-width="0.4" stroke-dasharray="3 2"/>
+</g>
+<g clip-path="url(#lr-f)">
+  <path d="M 300 45 Q 340 75 380 45" fill="none" stroke="#D4A23F" stroke-width="1"/>
+  <line x1="232" y1="470" x2="448" y2="470" stroke="#D4A23F" stroke-width="0.4" stroke-dasharray="3 2"/>
+</g>
+
+<g clip-path="url(#ul-f)">
+  <circle cx="340" cy="280" r="82" fill="none" stroke="#1A1A1A" stroke-width="3"/>
+  <circle cx="340" cy="280" r="74" fill="none" stroke="#1A1A1A" stroke-width="0.6"/>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700" letter-spacing="4" fill="#1A1A1A">
+    <textPath href="#arc-f" startOffset="50%" text-anchor="middle">DADDY LEADS</textPath>
+  </text>
+  <g transform="translate(340, 290) rotate(-25)">
+    <rect x="-2" y="-50" width="4" height="46" fill="#1A1A1A" rx="1"/>
+    <rect x="-5" y="-4" width="10" height="26" fill="#1A1A1A" rx="2"/>
+  </g>
+  <g transform="translate(340, 290) rotate(25)">
+    <rect x="-2" y="-50" width="4" height="46" fill="#1A1A1A" rx="1"/>
+    <rect x="-5" y="-4" width="10" height="26" fill="#1A1A1A" rx="2"/>
+  </g>
+  <circle cx="340" cy="226" r="7" fill="#1A1A1A"/>
+  <text x="340" y="298" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="900" fill="#1A1A1A" text-anchor="middle" letter-spacing="-3">DL</text>
+  <text x="340" y="318" font-family="Georgia, serif" font-size="11" font-weight="600" fill="#1A1A1A" text-anchor="middle" letter-spacing="3">2026</text>
+  <rect x="300" y="335" width="80" height="14" fill="#1A1A1A" rx="1"/>
+  <text x="340" y="346" font-family="Georgia, serif" font-size="9" font-weight="700" fill="#D4A23F" text-anchor="middle" letter-spacing="3">EST. 2022</text>
+  <line x1="245" y1="395" x2="315" y2="395" stroke="#1A1A1A" stroke-width="1.2"/>
+  <line x1="365" y1="395" x2="435" y2="395" stroke="#1A1A1A" stroke-width="1.2"/>
+  <circle cx="340" cy="395" r="2.5" fill="#1A1A1A"/>
+  <text x="340" y="425" font-family="Impact, 'Arial Black', sans-serif" font-size="26" font-weight="900" fill="#1A1A1A" text-anchor="middle" letter-spacing="2">CRICKET CLUB</text>
+  <text x="340" y="448" font-family="Georgia, serif" font-size="11" font-weight="500" font-style="italic" fill="#1A1A1A" text-anchor="middle" letter-spacing="3">a gentleman's game</text>
+</g>
+
+<g clip-path="url(#lr-f)">
+  <circle cx="340" cy="280" r="82" fill="none" stroke="#D4A23F" stroke-width="3"/>
+  <circle cx="340" cy="280" r="74" fill="none" stroke="#D4A23F" stroke-width="0.6"/>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700" letter-spacing="4" fill="#D4A23F">
+    <textPath href="#arc-f" startOffset="50%" text-anchor="middle">DADDY LEADS</textPath>
+  </text>
+  <g transform="translate(340, 290) rotate(-25)">
+    <rect x="-2" y="-50" width="4" height="46" fill="#D4A23F" rx="1"/>
+    <rect x="-5" y="-4" width="10" height="26" fill="#D4A23F" rx="2"/>
+  </g>
+  <g transform="translate(340, 290) rotate(25)">
+    <rect x="-2" y="-50" width="4" height="46" fill="#D4A23F" rx="1"/>
+    <rect x="-5" y="-4" width="10" height="26" fill="#D4A23F" rx="2"/>
+  </g>
+  <circle cx="340" cy="226" r="7" fill="#D4A23F"/>
+  <text x="340" y="298" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="900" fill="#D4A23F" text-anchor="middle" letter-spacing="-3">DL</text>
+  <text x="340" y="318" font-family="Georgia, serif" font-size="11" font-weight="600" fill="#D4A23F" text-anchor="middle" letter-spacing="3">2026</text>
+  <rect x="300" y="335" width="80" height="14" fill="#D4A23F" rx="1"/>
+  <text x="340" y="346" font-family="Georgia, serif" font-size="9" font-weight="700" fill="#1A1A1A" text-anchor="middle" letter-spacing="3">EST. 2022</text>
+  <line x1="245" y1="395" x2="315" y2="395" stroke="#D4A23F" stroke-width="1.2"/>
+  <line x1="365" y1="395" x2="435" y2="395" stroke="#D4A23F" stroke-width="1.2"/>
+  <circle cx="340" cy="395" r="2.5" fill="#D4A23F"/>
+  <text x="340" y="425" font-family="Impact, 'Arial Black', sans-serif" font-size="26" font-weight="900" fill="#D4A23F" text-anchor="middle" letter-spacing="2">CRICKET CLUB</text>
+  <text x="340" y="448" font-family="Georgia, serif" font-size="11" font-weight="500" font-style="italic" fill="#D4A23F" text-anchor="middle" letter-spacing="3">a gentleman's game</text>
+</g>
+
+<g clip-path="url(#sc-f)" fill="#FFFFFF">
+  <polygon points="455,95 457.4,101.8 464.5,101.9 458.8,106.2 460.9,113.1 455,109 449.1,113.1 451.2,106.2 445.5,101.9 452.7,101.8"/>
+  <polygon points="490,122.5 491.8,127.6 497.1,127.7 492.9,130.9 494.4,136.1 490,133 485.6,136.1 487.2,130.9 482.9,127.7 488.2,127.6"/>
+  <polygon points="470,156.5 472,162.3 478.1,162.4 473.2,166.1 475,171.9 470,168.4 465,171.9 466.8,166.1 461.9,162.4 468,162.3"/>
+</g>
+</svg>

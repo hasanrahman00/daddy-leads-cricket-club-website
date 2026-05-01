@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { background: #FBF1E5; color: #1A1A1A; font-family: Inter, sans-serif; }
+}
+
+@layer components {
+  .grain { position: relative; }
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .ticker { animation: ticker 40s linear infinite; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 0.9s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  .seam {
+    background:
+      radial-gradient(circle at 50% 50%, #C8553D 0 18%, transparent 19%) 50% 50% / 14px 14px,
+      #FBF1E5;
+  }
+
+  .stitch {
+    background-image: repeating-linear-gradient(90deg, #C8553D 0 8px, transparent 8px 14px);
+  }
+
+  /* Hide scrollbar visually but keep scrollability — for horizontal product carousel */
+  .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  /* On touch devices (phones/tablets), hover styles never trigger so
+     editable elements can look indistinguishable from static text.
+     Add a subtle always-visible ember dotted underline so the user
+     knows what's tappable for editing. */
+  @media (hover: none) {
+    [title^="Click to edit"],
+    [title="Click to upload a photo"],
+    [title="Click to nominate an MVP"],
+    [title="Click to upload your own jersey image"] {
+      box-shadow: inset 0 -2px 0 0 rgba(200, 85, 61, 0.35);
+      border-radius: 2px;
+    }
+  }
+
+  .btn-primary {
+    background: #1A1A1A;
+    color: #FBF1E5;
+    padding: 0.95rem 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: transform .2s, box-shadow .2s, background .2s;
+    border: 1px solid #1A1A1A;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 #C8553D;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: #1A1A1A;
+    padding: 0.95rem 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid #1A1A1A;
+    transition: transform .2s, box-shadow .2s, background .2s;
+  }
+  .btn-ghost:hover {
+    background: #1A1A1A;
+    color: #FBF1E5;
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 #C9A24A;
+  }
+
+  .card-tilt { transition: transform .35s ease, box-shadow .35s ease; }
+  .card-tilt:hover { transform: translateY(-6px) rotate(-.4deg); box-shadow: 10px 14px 0 #1A1A1A; }
+
+  .input {
+    width: 100%;
+    background: #FBF1E5;
+    border: 1px solid #1A1A1A;
+    padding: .85rem 1rem;
+    color: #1A1A1A;
+    font-weight: 500;
+    /* 16px+ prevents iOS Safari from auto-zooming on focus */
+    font-size: 16px;
+    border-radius: 6px;
+  }
+  .input:focus { outline: 2px solid #C8553D; outline-offset: 2px; }
+
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 0;
+    background: #1A1A1A;
+    transition: width .3s;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  .marker {
+    background: linear-gradient(180deg, transparent 60%, #C9A24A 60%);
+    padding: 0 .15em;
+  }
+
+  .scoreboard td,
+  .scoreboard th { border-bottom: 1px dashed #1A1A1A; }
+
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(180deg); }
+  .chev { transition: transform .25s; }
+
+  .polaroid {
+    background: #FBF1E5;
+    border: 1px solid #1A1A1A;
+    border-radius: 18px;
+    padding: 1rem 1rem 1.4rem;
+    box-shadow: 6px 6px 0 #1A1A1A;
+    overflow: hidden;
+  }
+  .polaroid .photo {
+    aspect-ratio: 1/1;
+    background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 60%, #C8553D 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .polaroid .photo .initials {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 5rem;
+    color: #FBF1E5;
+    letter-spacing: .05em;
+  }
+
+  .gallery-tile {
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #1A1A1A;
+  }
+  .gallery-tile .frame {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    color: #FBF1E5;
+    font-weight: 600;
+    letter-spacing: .04em;
+    background: linear-gradient(180deg, transparent 50%, rgba(10,10,10,.8) 100%);
+  }
+
+  /* Cricket ball — leather sheen + seam stitching */
+  .ball-leather {
+    background:
+      radial-gradient(circle at 30% 28%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 35%),
+      radial-gradient(circle at 70% 75%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 60%),
+      radial-gradient(circle at 50% 50%, #2A2A2A 0%, #1A1A1A 55%, #0A0A0A 100%);
+  }
+  .ball-seam {
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    top: 50%;
+    height: 18px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .ball-seam::before,
+  .ball-seam::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background: #FBF1E5;
+    opacity: 0.85;
+  }
+  .ball-seam::before { top: 4px; }
+  .ball-seam::after  { bottom: 4px; }
+  .ball-stitch {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      #FBF1E5 0,
+      #FBF1E5 4px,
+      transparent 4px,
+      transparent 12px
+    );
+    opacity: 0.55;
+    mix-blend-mode: screen;
+  }
+  @keyframes spin-slow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+  .spin-slow { animation: spin-slow 60s linear infinite; }
+
+  /* WhatsApp brand button */
+  .btn-whatsapp {
+    background: #25D366;
+    color: #0A0A0A;
+    padding: 0.7rem 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 1px solid #1A1A1A;
+    transition: transform .2s, box-shadow .2s, background .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 #1A1A1A;
+    background: #1FAE54;
+  }
+
+  /* Jersey-inspired diagonal cream/black split — mirrors the kit */
+  .jersey-split {
+    background: linear-gradient(115deg, #FBF1E5 0%, #FBF1E5 48%, #1A1A1A 48%, #1A1A1A 100%);
+  }
+  .jersey-split-soft {
+    background: linear-gradient(115deg, #FBF1E5 0%, #FBF1E5 50%, #1A1A1A 50%, #1A1A1A 100%);
+  }
+  .product-card {
+    background: #FBF1E5;
+    border: 1px solid #1A1A1A;
+    padding: 1.25rem;
+    transition: transform .25s, box-shadow .25s, background .25s, color .25s;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 6px 6px 0 #1A1A1A;
+    background: #1A1A1A;
+    color: #FBF1E5;
+  }
+
+  .pulse-dot { position: relative; }
+  .pulse-dot::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    background: #C8553D;
+    opacity: .4;
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(.6); opacity: .6; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+}
