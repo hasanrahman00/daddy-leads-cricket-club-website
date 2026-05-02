@@ -2,11 +2,11 @@ import { useRef, useState } from 'react';
 import { GALLERY } from '../data/content.js';
 import { useTexts } from '../context/TextsProvider';
 import { ensurePassword, saveValue } from '../lib/editableAuth.js';
+import { fileToCompressedDataUrl } from '../lib/imageUpload.js';
 import EditableText from './EditableText.jsx';
 
 const DEFAULT_COUNT = 6;
 const COUNT_KEY = 'gallery_count';
-const MAX_BYTES = 800 * 1024;
 
 function captionSeed(slotIndex) {
   return GALLERY[slotIndex]?.tag || `Photo ${slotIndex + 1}`;
@@ -22,10 +22,10 @@ function GalleryTile({ slotIndex }) {
   const fileRef = useRef(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleClick = async () => {
+  // Open file picker synchronously to preserve user-gesture activation;
+  // prompt for password after the user picks a file.
+  const handleClick = () => {
     if (isUploading) return;
-    const pw = await ensurePassword();
-    if (!pw) return;
     fileRef.current?.click();
   };
 
@@ -34,30 +34,30 @@ function GalleryTile({ slotIndex }) {
     e.target.value = '';
     if (!file) return;
     if (!file.type.startsWith('image/')) {
-      window.alert('Please pick an image file.');
+      window.alert('Please pick an image file (jpg, png, webp, heic, gif, etc.).');
       return;
     }
-    if (file.size > MAX_BYTES) {
-      window.alert('Photo too large (max 800KB).');
-      return;
-    }
+    const pw = await ensurePassword();
+    if (!pw) return;
     setIsUploading(true);
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = String(reader.result || '');
+    try {
+      // Gallery tiles are landscape — allow slightly bigger long-edge
+      const dataUrl = await fileToCompressedDataUrl(file, { maxDim: 1400, quality: 0.85 });
       const result = await saveValue(photoKey, dataUrl);
-      setIsUploading(false);
       if (result.ok) {
         setLocalText(photoKey, dataUrl);
+      } else if (result.reason === 'locked' || result.reason === 'unauthorized') {
+        window.alert('Session locked — re-enter your password and try again.');
       } else {
-        window.alert('Photo upload failed.');
+        console.error('GalleryTile upload failed', { photoKey, result });
+        window.alert('Photo upload failed (' + (result.reason || 'unknown') + ').');
       }
-    };
-    reader.onerror = () => {
+    } catch (err) {
+      console.error('GalleryTile upload error', err);
+      window.alert('Could not process image: ' + (err?.message || 'unknown error'));
+    } finally {
       setIsUploading(false);
-      window.alert('Could not read that file.');
-    };
-    reader.readAsDataURL(file);
+    }
   };
 
   // Subtle on-tile gradient that varies per slot for the placeholder state
@@ -96,11 +96,34 @@ function GalleryTile({ slotIndex }) {
           #{String(i).padStart(2, '0')}
         </span>
 
-        {/* Hover overlay */}
+        {/* Hover overlay (desktop) */}
         <span className="absolute inset-0 z-20 flex items-center justify-center bg-ink-950/0 group-hover:bg-ink-950/55 transition-colors opacity-0 group-hover:opacity-100">
           <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-cream-50 border-2 border-ink-950 text-ink-950 text-[10px] font-bold uppercase tracking-[0.2em] shadow-[3px_3px_0_#1A1A1A]">
             {isUploading ? 'Uploading…' : photoUrl ? '📷 Change' : '📷 Upload'}
           </span>
+        </span>
+
+        {/* Always-visible camera badge for touch / no-hover devices */}
+        <span
+          className="absolute bottom-2 right-2 z-30 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ember-500 text-cream-50 text-[10px] font-bold uppercase tracking-[0.18em] border-2 border-cream-50 rounded-md shadow-md"
+          aria-hidden="true"
+        >
+          {isUploading ? (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="animate-spin" aria-hidden="true">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+              </svg>
+              Uploading
+            </>
+          ) : (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+              {photoUrl ? 'Change' : 'Upload'}
+            </>
+          )}
         </span>
 
         <input

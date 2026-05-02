@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useTexts } from '../context/TextsProvider';
 import { ensurePassword, saveValue } from '../lib/editableAuth.js';
+import { fileToCompressedDataUrl } from '../lib/imageUpload.js';
 import EditableText from './EditableText.jsx';
 
 const WHATSAPP_URL = `https://wa.me/8801885781259?text=${encodeURIComponent(
@@ -9,7 +10,6 @@ const WHATSAPP_URL = `https://wa.me/8801885781259?text=${encodeURIComponent(
 
 const JERSEY_KEY = 'sponsor_jersey_image';
 const DEFAULT_JERSEY = '/jersey-front.svg';
-const MAX_BYTES = 800 * 1024;
 // Match the SVG's intrinsic aspect ratio (680 × 540) so uploads keep the same shape
 const JERSEY_ASPECT = '680 / 540';
 
@@ -21,10 +21,10 @@ function useJerseyUpload() {
   const fileRef = useRef(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  const triggerUpload = async () => {
+  // Open file picker synchronously to preserve user-gesture activation;
+  // prompt for password after the user picks a file.
+  const triggerUpload = () => {
     if (isUploading) return;
-    const pw = await ensurePassword();
-    if (!pw) return;
     fileRef.current?.click();
   };
 
@@ -33,30 +33,27 @@ function useJerseyUpload() {
     e.target.value = '';
     if (!file) return;
     if (!file.type.startsWith('image/')) {
-      window.alert('Please pick an image file.');
+      window.alert('Please pick an image file (jpg, png, webp, heic, gif, etc.).');
       return;
     }
-    if (file.size > MAX_BYTES) {
-      window.alert('Image too large (max 800KB).');
-      return;
-    }
+    const pw = await ensurePassword();
+    if (!pw) return;
     setIsUploading(true);
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = String(reader.result || '');
+    try {
+      const dataUrl = await fileToCompressedDataUrl(file, { maxDim: 1400, quality: 0.88 });
       const result = await saveValue(JERSEY_KEY, dataUrl);
-      setIsUploading(false);
       if (result.ok) {
         setLocalText(JERSEY_KEY, dataUrl);
+      } else if (result.reason === 'locked' || result.reason === 'unauthorized') {
+        window.alert('Session locked — re-enter your password and try again.');
       } else {
-        window.alert('Upload failed.');
+        window.alert('Upload failed (' + (result.reason || 'unknown') + ').');
       }
-    };
-    reader.onerror = () => {
+    } catch (err) {
+      window.alert('Could not process image: ' + (err?.message || 'unknown error'));
+    } finally {
       setIsUploading(false);
-      window.alert('Could not read that file.');
-    };
-    reader.readAsDataURL(file);
+    }
   };
 
   return { uploaded, isUploading, triggerUpload, handleFile, fileRef };
